@@ -1,0 +1,46 @@
+name: abiel-test
+mgmt:
+  network: oob_mgmt_dcf                # management network name
+  ipv4-subnet: 172.20.20.0/24          # ipv4 range
+topology:
+  kinds:
+    srl:
+      image: ghcr.io/nokia/srlinux:23.10.2
+  nodes:
+    tor1:
+      kind: srl
+      type: ixrd3l
+      startup-config: configs/tor1.cfg
+    tor2:
+      kind: srl
+      type: ixrd3l
+      startup-config: configs/tor2.cfg
+    arg1:
+      kind: srl
+      type: ixrd3l
+      startup-config: configs/arg1.cfg
+    arg2:
+      kind: srl
+      type: ixrd3l
+      startup-config: configs/arg2.cfg
+    mag-c-1:
+      kind: srl
+      type: ixrd3l
+    mag-c-2:
+      kind: srl
+      type: ixrd3l
+  links:
+    - endpoints: ["tor1:e1-1", "mag-c-1:e1-1"]
+    - endpoints: ["tor1:e1-2", "mag-c-1:e1-2"]
+    - endpoints: ["tor1:e1-3", "mag-c-2:e1-1"]
+    - endpoints: ["tor1:e1-4", "mag-c-2:e1-2"]
+    - endpoints: ["tor2:e1-1", "mag-c-1:e1-3"]
+    - endpoints: ["tor2:e1-2", "mag-c-1:e1-4"]
+    - endpoints: ["tor2:e1-3", "mag-c-2:e1-3"]
+    - endpoints: ["tor2:e1-4", "mag-c-2:e1-4"]
+    - endpoints: ["tor1:e1-31", "tor2:e1-31"]
+    - endpoints: ["tor1:e1-32", "tor2:e1-32"]
+    - endpoints: ["tor1:e1-25", "arg1:e1-2"]
+    - endpoints: ["tor1:e1-26", "arg1:e1-3"]
+    - endpoints: ["tor2:e1-25", "arg2:e1-2"]
+    - endpoints: ["tor2:e1-26", "arg2:e1-3"]
